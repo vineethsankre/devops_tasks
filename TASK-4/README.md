@@ -1,122 +1,83 @@
-# Task 4: Auto Scaling in AWS (EC2 + ALB)
+**Date:** `08-01-2026`
+# 🛡️ Task-4: AWS WAF with Application Load Balancer
 
-This document outlines the steps to configure Auto Scaling with an Application Load Balancer (ALB) and EC2 instances on AWS.
+## 1️⃣ Create AWS WAF Web ACL
 
-## Architecture Flow
-
-**User** $\rightarrow$ **ALB** $\rightarrow$ **Target Group** $\rightarrow$ **Auto Scaling Group** $\rightarrow$ **EC2 Instances**
-*(Scaling Trigger: CPU > 70% triggers scale out)*
-
----
-
-## Step 1: Create Launch Template for EC2 Instances
-
-1.  Navigate to **AWS Console** $\rightarrow$ **EC2** $\rightarrow$ **Launch Templates**.
-2.  Click **Create launch template**.
-3.  **Configure Settings:**
-    * **Launch template name:** `webserver-lt`
-    * **AMI:** Amazon Linux 2
-    * **Instance type:** `t2.micro` (Free-tier eligible)
-    * **Key pair:** Select your existing key pair
-    * **Security group:** Create a new SG or select an existing one with:
-        * Allow **HTTP (80)** from `0.0.0.0/0`
-        * Allow **SSH (22)** from `My IP`
-    * **IAM role:** (Optional) Attach EC2 role with S3 access if required.
-4.  **Advanced details (User Data):**
-    Paste the following script to install and start Apache automatically:
-    ```bash
-    #!/bin/bash
-    yum update -y
-    yum install -y httpd
-    systemctl start httpd
-    systemctl enable httpd
-    echo "<h1>Auto Scaling Instance - $(hostname)</h1>" > /var/www/html/index.html
-    ```
-5.  Click **Create launch template**.
+1. Go to **AWS Console → WAF & Shield**
+2. Click **Create Web ACL**
+3. Configure:
+   - **Name:** `web-acl-alb`
+   - **Resource type:** Regional
+   - **Region:** Same as your ALB
+   - **Associated AWS resource:** Select your **ALB (web-alb)**
+4. Click **Next**
 
 ---
 
-## Step 2: Create Application Load Balancer (ALB)
+## 2️⃣ Create IP Set (Your Laptop IP)
 
-### A. Create Target Group
-1.  Navigate to **EC2** $\rightarrow$ **Target Groups**.
-2.  Click **Create target group**.
-3.  **Configure:**
-    * **Type:** Instances
-    * **Protocol:** HTTP
-    * **Port:** 80
-    * **Health check path:** `/`
-    * **Name:** `asg-tg`
+You must block **your public IP**.
 
-### B. Create ALB
-1.  Navigate to **EC2** $\rightarrow$ **Load Balancers** $\rightarrow$ **Create Load Balancer**.
-2.  Choose **Application Load Balancer**.
-3.  **Configure:**
-    * **Name:** `web-alb`
-    * **Scheme:** Internet-facing
-    * **IP type:** IPv4
-    * **Listener:** HTTP (80)
-    * **VPC:** Default
-    * **Subnets:** Select at least 2 Availability Zones (AZs)
-    * **Security Group:** Allow HTTP (80)
-    * **Listener Routing:** Forward traffic to Target Group `asg-tg`.
+1. Go to **WAF → IP sets**
+2. Click **Create IP set**
+3. Configure:
+   - **Name:** `blocked-ip`
+   - **Region:** Same as ALB
+   - **IP version:** IPv4
+4. Find your public IP from:  
+   https://whatismyipaddress.com
+5. Enter your IP in CIDR format: 203.0.113.25/32
+6. Click **Create**
 
 ---
 
-## Step 3: Configure Auto Scaling Group (Linked to ALB)
+## 3️⃣ Add Block Rule in Web ACL
 
-1.  Navigate to **EC2** $\rightarrow$ **Auto Scaling Groups** $\rightarrow$ **Create**.
-2.  **Name:** `web-asg`
-3.  **Launch Template:** Select `webserver-lt`.
-4.  **Network:** Choose VPC & select minimum 2 subnets.
-5.  **Group Size:**
-    * **Desired:** 2
-    * **Minimum:** 1
-    * **Maximum:** 4
-6.  **Load Balancing:**
-    * Select **Attach to existing load balancer**.
-    * Choose **Application Load Balancer**.
-    * **Target group:** `asg-tg`.
-    * Enable **ELB health checks**.
+1. Go to **WAF → Web ACLs → `web-acl-alb`**
+2. Click **Add rule**
+3. Configure:
+- **Rule type:** IP set
+- **Rule name:** `block-my-laptop`
+- **IP set:** `blocked-ip`
+- **Action:** Block
+- **Priority:** 1
+4. Click **Save**
+
+Default action should be **Allow**.
 
 ---
 
-## Step 4: Set Scaling Policy (CPU > 70%)
+## 4️⃣ Attach WAF to ALB
 
-1.  Go to the **Auto Scaling Group** created (`web-asg`).
-2.  Click the **Automatic scaling** tab.
-3.  Click **Create dynamic scaling policy**.
-4.  **Policy Type:** Target tracking scaling.
-5.  **Metric type:** Average CPU Utilization.
-6.  **Target value:** `70`
-7.  **Instance warm-up:** `300` seconds.
+If not already attached:
 
-> **Note:** AWS will now:
-> * 📈 Scale **OUT** when CPU > 70%
-> * 📉 Scale **IN** when CPU < 70%
+1. Open **Web ACL → `web-acl-alb`**
+2. Go to **Associated AWS resources**
+3. Click **Add**
+4. Select **`web-alb`**
+5. Click **Save**
+
+WAF is now protecting the ALB.
 
 ---
 
-## Step 5: Verify Auto Scaling (Optional)
+## 5️⃣ Test Before & After WAF
 
-To test the configuration, perform a stress test on the CPU.
+### A. Before Block Rule
 
-1.  **SSH** into one of the running EC2 instances.
-2.  Install and run `stress`:
-    ```bash
-    sudo yum install stress -y
-    stress --cpu 2 --timeout 300
-    ```
-3.  **Monitor:**
-    * Go to **CloudWatch** $\rightarrow$ **Metrics** $\rightarrow$ **Auto Scaling**.
-    * Observe the instance count increase as CPU load rises.
+1. Go to **EC2 → Load Balancers → `web-alb`**
+2. Copy the DNS name: web-alb-123456.us-east-1.elb.amazonaws.com
+3. Open it in your browser  
+You should see:
+- Auto Scaling Instance - ip-10-0-x-x
+✅ Access allowed
 
 ---
 
-## Final Checklist
+### B. After Block Rule Added
 
-- [x] Launch Template created (`webserver-lt`)
-- [x] ALB configured (`web-alb`)
-- [x] Target Group attached (`asg-tg`)
-- [x] Auto Scaling Group linked (`web-asg`)
-- [x] CPU-based scaling enabled (Target: 70%)
+1. Wait 1–2 minutes
+2. Open the ALB URL again
+
+You should see:
+- 403 Forbidden
