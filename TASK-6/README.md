@@ -1,6 +1,6 @@
 # 🌐 AWS Task-6 — Route 53 + ALB + HTTPS Setup  
-**Date:** `12-01-2026`
-**Domain:** `vineethsworld.xyz`
+- **Date:** `12-01-2026`
+- **Domain:** `vineethsworld.xyz`
 
 ---
 
