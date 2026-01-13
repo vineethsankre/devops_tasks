@@ -1,6 +1,5 @@
 # 🌐 AWS Task-6 — Route 53 + ALB + HTTPS Setup  
 **Domain:** `vineethsworld.xyz`  
-**ALB:** `myapp-alb-573337255.us-east-1.elb.amazonaws.com`
 
 ---
 
@@ -47,7 +46,7 @@ ns-xxx.awsdns-xx.co.uk
 | Alias | ON |
 | Route traffic to | Application Load Balancer |
 | Region | us-east-1 |
-| Load balancer | myapp-alb-573337255 |
+| Load balancer | your-alb.amazonaws.com |
 
 3. Click **Create**
 
@@ -64,7 +63,7 @@ Create another record:
 |------|-------|
 | Record name | www |
 | Type | CNAME |
-| Value | myapp-alb-573337255.us-east-1.elb.amazonaws.com |
+| Value | your-alb.amazonaws.com |
 
 Save.
 
