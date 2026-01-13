@@ -160,8 +160,8 @@ Target Group → Health checks:
 ## ✅ 12. Verify Domain & HTTPS
 
 Open in browser:
-  https://vineethsworld.xyz
-  https://www.vineethsworld.xyz
+- https://vineethsworld.xyz
+- https://www.vineethsworld.xyz
 
 You should see:
 - HTTPS 🔒
