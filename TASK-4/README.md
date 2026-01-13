@@ -70,6 +70,7 @@ WAF is now protecting the ALB.
 3. Open it in your browser  
 You should see:
 - Auto Scaling Instance - ip-10-0-x-x
+
 ✅ Access allowed
 
 ---
