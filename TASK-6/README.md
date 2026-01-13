@@ -78,8 +78,8 @@ www.vineethsworld.xyz → ALB
 1. Go to **AWS Certificate Manager (us-east-1)**
 2. Click **Request certificate**
 3. Add:
-   vineethsworld.xyz
-   www.vineethsworld.xyz
+   - vineethsworld.xyz
+   - www.vineethsworld.xyz
 4. Select **DNS validation**
 5. Click **Request**
 
