@@ -1,4 +1,4 @@
-# TASK:7 — System Monitoring + Log Management Script (Bash)
+# TASK: 7 — System Monitoring + Log Management Script (Bash)
 
 This project contains a Bash shell script that automates basic **system monitoring** and **cloud-style operations** like a DevOps / Cloud Engineer would do on a Linux server.
 
@@ -45,15 +45,6 @@ Checks and displays:
 ## ✅ Step-by-Step Setup Instructions### Step 1: Create the script fileCreate a new file:nano system_monitor.sh
 Paste the full script code inside it and save.### Step 2: Make the script executableRun:chmod +x system_monitor.sh
 
-
-          
-            
-          
-        
-  
-        
-    
-
 Step 3: Execute the scriptRun:./system_monitor.sh
 ## 📄 Output &amp; Logs### ✅ System report logsEach time you run the script, it generates a new report file like:logs/system_report_YYYY-MM-DD_HH-MM-SS.log
 Example:logs/system_report_2026-01-18_12-30-10.log
@@ -62,13 +53,6 @@ Format example:2026-01-18 12:30:10 HIGH CPU PROCESS -&gt; 2345 python3 92.4
 ## 🔁 Log Rotation (Auto Cleanup)The script automatically deletes old report logs inside logs/ directory that are older than 7 days:find logs/ -type f -name "system_report_*.log" -mtime +7 -delete
 ## 🛠 RequirementsThis script works on most Linux distributions with:bashtopfreedfpsawkfind## 🚀 Optional: Run Automatically (Cron Job)To run the script every 10 minutes:
 
-          
-            
-          
-        
-  
-        
-    
 
 Step 1: Open crontabcrontab -e
 ### Step 2: Add this lineReplace /path/to/ with your real path:*/10 * * * * /path/to/system_monitor.sh
