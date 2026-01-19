@@ -1,4 +1,4 @@
-# 🖥️ System Monitoring Bash Script (TASK:7)
+# 🖥️ TASK-7: System Monitoring Bash Script 
 
 This project contains a **Bash shell script** that automates basic system monitoring and cloud-style operations, similar to what a **DevOps / Cloud Engineer** would do on a Linux server.
 
