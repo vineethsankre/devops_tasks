@@ -3,38 +3,6 @@
 ## Objective
 Students will learn how to containerize an application using Docker, manage Docker images and containers, and understand basic DevOps workflows.
 
-## ✅ Requirements Covered
-
-### Part 1: Environment Setup
-- Install Docker on your system
-- Verify Docker is working
-
-### Part 2: Create a Simple Application
-Chosen option: **Python Flask App**
-
-The application:
-- Runs locally
-- Shows the message: **Hello from Docker – DevOps Task**
-
-### Part 3: Dockerfile Creation
-Dockerfile includes:
-- Base image
-- Working directory
-- Copy application files
-- Install dependencies
-- Expose port
-- CMD to run the app
-
-### Part 4: Build & Run Docker Image
-- Build image using `docker build`
-- Run container using `docker run`
-- Access application in browser
-
-### Part 5: Docker Commands Practice
-- Practice common Docker commands
-
----
-
 # Part 1: Environment Setup (Install Docker)
 
 ## Install Docker
