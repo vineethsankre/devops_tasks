@@ -214,6 +214,4 @@ Open:
 http://localhost:8080
 ```
 
----
-DevOps Task 8 Submission
 
