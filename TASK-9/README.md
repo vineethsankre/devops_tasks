@@ -1,4 +1,4 @@
-# Task 9 — Terraform State Migration (Single Resource → `count = 5`) Without Destroying Existing Instance
+# Task 9 — Terraform State Migration
 
 ## 📌 Task Title
 **Terraform State Migration to Scale Instance Using `count` Without Destroying Existing Instance**
@@ -163,11 +163,6 @@ terraform state pull > backup.tfstate
 
 ---
 
-## 📝 Interview-Ready Summary
-> “I converted the resource to use `count=5`, then migrated the Terraform state from `aws_instance.web_server` to `aws_instance.web_server[0]` using `terraform state mv` (or a `moved` block). This ensured the original instance was preserved and Terraform only created 4 additional instances.”
-
----
-
 ## ✅ Expected Final State
 Terraform state should contain:
 - `aws_instance.web_server[0]` (existing instance)
@@ -177,15 +172,4 @@ Terraform state should contain:
 - `aws_instance.web_server[4]`
 
 ---
-
-## 📚 Useful Commands Cheat Sheet
-```bash
-terraform init
-terraform fmt
-terraform validate
-terraform state list
-terraform state mv <old_address> <new_address>
-terraform plan
-terraform apply
-```
 
