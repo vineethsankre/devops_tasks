@@ -44,7 +44,7 @@ So we must migrate state so Terraform understands:
 ### Before (Current State)
 ```hcl
 resource "aws_instance" "web_server" {
-  ami           = "07ff62358b87c7116"
+  ami           = "ami-07ff62358b87c7116"
   instance_type = "t2.micro"
 
   tags = {
@@ -57,7 +57,7 @@ resource "aws_instance" "web_server" {
 ```hcl
 resource "aws_instance" "web_server" {
   count         = 5
-  ami           = "07ff62358b87c7116"
+  ami           = "ami-07ff62358b87c7116"
   instance_type = "t2.micro"
 
   tags = {
