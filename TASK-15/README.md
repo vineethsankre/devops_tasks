@@ -26,6 +26,7 @@ Ensure you have:
 -   AWS Account
 -   IAM user with permissions for S3 and CloudFront
 -   AWS CLI installed
+-   Cloned GitHub Project repo URL: https://github.com/vineethsankre/AWS_Codepipeline_S3_CloudFront.git
 
 Install AWS CLI:
 
@@ -204,6 +205,3 @@ To avoid charges:
 1.  Delete CloudFront distribution
 2.  Delete S3 bucket
 
-------------------------------------------------------------------------
-
-⭐ If this project helped you, consider starring the repository.
