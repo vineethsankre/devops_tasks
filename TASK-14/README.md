@@ -243,12 +243,4 @@ Delete the cluster if no longer required:
 eksctl delete cluster --name my-cluster
 ```
 
-------------------------------------------------------------------------
-
-# Support
-
-If you found this project useful:
-
-⭐ Star the repository\
-🔁 Share it with others
 
