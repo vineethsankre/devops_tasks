@@ -187,13 +187,4 @@ terraform apply
 
 ---
 
-## 🎯 Interview Summary
-
-"I implemented a secure Terraform backend using S3 with SSE-KMS encryption and DynamoDB for state locking to ensure safe and collaborative infrastructure management."
-
----
-
-## 📦 Author
-
-Vineeth Sankre – DevOps Engineer
 
