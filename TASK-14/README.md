@@ -95,7 +95,7 @@ eksctl utils associate-iam-oidc-provider \
 Download IAM policy:
 
 ``` bash
-curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json
+curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
 ```
 
 Create IAM policy:
